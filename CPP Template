@@ -1,0 +1,250 @@
+//problem started at:  paused at:  resumed at:
+#include<bits/stdc++.h>
+using namespace std;
+ 
+#define boost ios_base::sync_with_stdio(false);cin.tie(NULL)
+#define endl "\n"
+#define ll long long int
+#define mod 1000000007
+#define vll vector<ll>
+#define vvll vector<vll>
+#define pb push_back
+#define mll map<ll,ll>
+#define pll pair<ll,ll>
+ 
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+using namespace __gnu_pbds;
+#define ordered_set tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update>
+const ll N=1000001;
+ll factorialNumInverse[N + 1];
+ll naturalNumInverse[N + 1];
+ll spf[N + 1];
+ll fact[N + 1];
+
+//1.Z function
+//2.Kadane's Algorithm
+//3.Sieve of Eratostheness
+//4.Prime Factorization(void sieve()+getFactorization())
+//5.Function to calculate nCr and nPr
+//6.Disjoint set union
+//7.Binary to decimal
+//8.Decimal to binary
+//9.Segment Tree
+//z array
+vector<ll> z_function(string s) {
+    ll n = (ll) s.length();
+    vector<ll> z(n);
+    for (ll i = 1; i < n; ++i)
+        while (i + z[i] < n && s[z[i]] == s[i + z[i]])
+            ++z[i];
+        return z;
+}
+//kadane's algorithm
+ll maxSubArraySum(vll &a)
+{
+    ll max_so_far = INT_MIN, max_ending_here = 0;
+    for (ll i = 0; i < a.size(); i++)
+    {
+        max_ending_here = max_ending_here + a[i];
+        if (max_so_far < max_ending_here)
+            max_so_far = max_ending_here;
+        if (max_ending_here < 0)
+            max_ending_here = 0;
+    }
+    return max_so_far;
+}
+vector<ll> SieveOfEratosthenes(ll n)
+{
+    bool prime[n + 1];
+    memset(prime, true, sizeof(prime));
+    for (ll p = 2; p * p <= n; p++)
+    {
+        if (prime[p] == true)
+        {
+            for (ll i = p * p; i <= n; i += p)
+                prime[i] = false;
+        }
+    }
+    vector<ll> v;
+    for (int p = 2; p <= n; p++)
+        if (prime[p])
+            v.pb(p);
+    return v;
+}
+//Prime factorization
+void sieve()
+{
+    spf[1] = 1;
+    for (ll i=2; i<N; i++)
+        spf[i] = i;
+    for (ll i=4; i<N; i+=2)
+        spf[i] = 2;
+    for (ll i=3; i*i<N; i++)
+    {
+        if (spf[i] == i)
+        {
+            for (ll j=i*i; j<N; j+=i)
+                if (spf[j]==j)
+                    spf[j] = i;
+        }
+    }
+}
+vector<ll> getFactorization(ll x)
+{
+    vector<ll> ret;
+    while (x != 1)
+    {
+        ret.push_back(spf[x]);
+        x = x / spf[x];
+    }
+    return ret;
+}
+// Function to precompute inverse of numbers
+void InverseofNumber()
+{
+    naturalNumInverse[0]=naturalNumInverse[1]=1;
+    for(ll i=2;i<=N;i++)
+    naturalNumInverse[i]=naturalNumInverse[mod%i]*(mod-mod/i)%mod;
+}
+// Function to precompute inverse of factorials
+void InverseofFactorial()
+{
+    factorialNumInverse[0]=factorialNumInverse[1]=1;
+    // precompute inverse of natural numbers
+    for(ll i=2;i<=N;i++)
+    factorialNumInverse[i]=(naturalNumInverse[i]*factorialNumInverse[i-1])%mod;
+}
+// Function to calculate factorial of 1 to N
+void factorial()
+{
+    fact[0]=1;
+    for (ll i=1;i<=N;i++) {
+        fact[i]=(fact[i-1]*i)%mod;
+    }
+}
+//power
+ll power(ll a,ll b)
+{
+    if(b==0)
+        return 1;
+    ll t=power(a,b/2)%mod;
+    ll x=((t%mod)*(t%mod))%mod;
+    if(b%2)
+        x=((x%mod)*(a%mod))%mod;
+    return x;
+}
+//inverse of a number
+ll inverse(ll x)
+{
+    return power(x,mod-2);
+}
+ll nCr(ll n,ll r)
+{
+    ll ans=((fact[n]*factorialNumInverse[r])%mod*factorialNumInverse[n-r])%mod;
+    return ans;
+}
+//nPr
+ll nPr(ll n,ll r)
+{
+    return (fact[n]*factorialNumInverse[n-r])%mod;
+}
+
+// dsu
+ll getparent(ll a,vll &parent)
+{
+    return parent[a]=(parent[a]==a?a:getparent(parent[a],parent));
+}
+void getunion(ll a,ll b,vll &parent,vll &size)
+{
+    a=getparent(a,parent);
+    b=getparent(b,parent);
+    if(size[b]>size[a])
+    {
+        parent[a]=b;
+        size[b]+=size[a];
+    }
+    else
+    {
+        parent[b]=a;
+        size[a]+=size[b];
+    }
+}
+//binary to decimal
+ll bintodec(string s)
+{
+    ll sum=0;
+    reverse(s.begin(),s.end());
+    for(ll i=0;i<s.length();i++)
+    {
+        sum+=(s[i]=='1'?pow(2,i):0);
+    }
+    return sum;
+}
+//decimal to binary
+string dectobin(ll n)
+{
+    string s;
+    while(n>0)
+    {
+        if((n&1))
+            s.pb('1');
+        else
+            s.pb('0');
+        n=(n>>1);
+    }
+    reverse(s.begin(),s.end());
+    return s;
+}
+//Segment Tree
+//Segment Tree has a size of 4 times that of normal array i.e(4*n)
+//Segment Tree is a full binary tree
+void build(vll &a,vll &seg,ll s,ll e,ll tidx)
+{
+    if(s==e)
+    {
+        seg[tidx]=a[s];
+        return ;
+    }
+    ll mid=(s+e)/2;
+    build(a,seg,s,mid,2*tidx);
+    build(a,seg,mid+1,e,2*tidx+1);
+    seg[tidx]=seg[2*tidx]+seg[2*tidx+1];
+}
+void update(vll &a,vll &seg,ll s,ll e,ll tidx,ll i,ll val)
+{
+    if(s==e)
+    {
+        a[i]=val;
+        seg[tidx]=val;
+        return ;
+    }
+    ll mid=(s+e)/2;
+    if(i>mid)
+        update(a,seg,mid+1,e,2*tidx+1,i,val);
+    else
+        update(a,seg,s,mid,2*tidx,i,val);
+    seg[tidx]=seg[2*tidx]+seg[2*tidx+1];
+}
+ll query(vll &seg,ll s,ll e,ll tidx,ll left,ll right)
+{
+    if(s>right||e<left)
+        return 0;
+    if(s>=left&&e<=right)
+        return seg[tidx];
+    ll mid=(s+e)/2;
+    ll a1=query(seg,s,mid,2*tidx,left,right);
+    ll a2=query(seg,mid+1,e,2*tidx+1,left,right);
+    return a1+a2;
+}
+int main()
+{
+    boost;
+    ll t,n,i,x,y,m,p,q,sum,ans,cnt,mx,mn,j,k;
+    cin>>t;
+    while(t--)
+    {
+        sum=0;cnt=0;ans=0;mx=INT_MIN;mn=1e18;
+        
+    }
+}
