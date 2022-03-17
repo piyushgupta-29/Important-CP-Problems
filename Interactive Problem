@@ -1,0 +1,32 @@
+#include<bits/stdc++.h>  ml mk
+using namespace std; 
+typedef long long int ll;
+map<char,ll> mp;
+
+int main() { 
+    ll t,n,i,x,y,z,b,c,sum,j; 
+    cin>>n; 
+    int a[n];
+    cout<<"? "<<1<<" "<<2<<endl; 
+    cout.flush(); 
+    cin>>x; 
+    cout<<"? "<<2<<" "<<3<<endl; 
+    cout.flush(); 
+    cin>>y;
+    cout<<"? "<<1<<" "<<3<<endl; 
+    cout.flush(); 
+    cin>>z;
+    a[0]=z-y; 
+    a[1]=x-a[0]; 
+    a[2]=y-a[1]; 
+    for(i=3;i<n;i++)
+    {
+      cout<<"? "<<i<<" "<<i+1<<endl;
+      cout.flush();
+      cin>>t; 
+      a[i]=t-a[i-1];
+    } 
+    cout<<"! "; 
+    for(i=0;i<n;i++)
+    cout<<a[i]<<" ";
+}
