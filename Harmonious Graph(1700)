@@ -1,1 +1,60 @@
 #
+// Easy implementation
+
+#include<bits/stdc++.h>
+using namespace std;
+
+#define fast ios_base::sync_with_stdio(0);cin.tie(NULL);cout.tie(NULL)
+#define ll long long
+#define ld long double
+#define pb push_back
+#define fe first
+#define se second
+#define nl "\n"
+#define pp pair < ll , ll > 
+#define sz(x) (ll)x.size()
+#define st(x) sort(x.begin(),x.end())
+#define rst(x) sort(x.rbegin(), x.rend())
+#define all(x) x.begin(),x.end()
+long double pi = 3.14159265358979323;
+ 
+const double EPS = 1e-12;
+const int N = 2e5 + 5;
+const int mod = 1e9 + 7;
+ 
+vector < ll > v[N];
+bool vis[N];
+ll maxm; 
+void dfs(ll s){
+	vis[s] = 1;
+	maxm = max(maxm , s);
+	for(auto it : v[s]){
+		if(!vis[it])dfs(it);
+	}
+} 
+ 
+int main()
+{
+    fast;
+    //Quite an Easy Problem
+    ll n ,m;
+    cin >> n >> m ;
+    for(int i = 0 ; i < m ;i++ ){
+            ll a , b;
+            cin >> a >> b ;
+            v[a].pb(b);
+            v[b].pb(a);
+    }
+    ll ans = 0 ;
+    for(int i = 1 ; i <= n ;i++ ){
+    	if(!vis[i]){
+    		
+    		if(i < maxm)ans++;
+    		dfs(i);
+    	}
+    }
+    cout << ans;
+  
+    return 0;
+    
+}
