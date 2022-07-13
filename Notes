@@ -1,0 +1,20 @@
+#The number of times a number x appears in n! is 
+i=1;ans=0;
+while(n/pow(x,i)>0)
+{
+    ans+=n/pow(x,i);
+    i++;
+}
+i.e x appears in n! n/x^1+n/x^2.... times
+e.g 2 appears in 5! 5/2+5/4+5/8...=2+1+0+0..=3times
+
+#The number of numbers i such that n/i gives a fixed integer value x are:
+[ceil(n+1)/(i+1)...(n/i)]
+Proof:
+n/i>=x     ...(1)
+n/i<x+1    ...(2)
+n/x>=i     ...(3)(from eq(1))
+n+1<=i*(x+1)  (from eq(2))
+ceil(n+1)/(x+1)<=i  ...(4)
+Therefore form eq(3) and (4) we get the range[ceil(n+1)/(i+1)...(n/i)]
+
