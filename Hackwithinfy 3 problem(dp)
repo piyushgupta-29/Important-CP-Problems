@@ -1,4 +1,7 @@
-Your are given an Array Arr of size N. You are asked to split the array into multiple subsets of length at least 3 such that each element belongs to exactly one subset. The cost of splitting the array is the sum of costs of each subset, where the cost of a subset is the difference between the largest and smallest element in the subset. Find the minimum total possible cost of splitting.
+Your are given an Array Arr of size N.
+You are asked to split the array into multiple subsets of length at least 3 such that each element belongs to exactly one subset. 
+The cost of splitting the array is the sum of costs of each subset, where the cost of a subset is the difference between the largest 
+and smallest element in the subset. Find the minimum total possible cost of splitting.
 
 Constraints:
 
@@ -7,31 +10,22 @@ Constraints:
 1<=Arr[i]<=10^9
 
 Sample Input 1:
-
 5
-
 2 1 4 1 3
 
 Output 1
-
 3
 
 Sample Input 2:
-
 6
-
 1 3 2 100 101 102
 
 Output 2:
-
 4
 
 Sample Input 3:
-
 6
-
 15 1 5 12 2 13
 
 Output 3:
-
 7
