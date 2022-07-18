@@ -17,4 +17,8 @@ n/x>=i     ...(3)(from eq(1))
 n+1<=i*(x+1)  (from eq(2))
 (n/(x+1))+1<=i  i.e (n+x+1)/(x+1)<=i...(4)
 Therefore form eq(3) and (4) we get the range[(n+x+1)/(x+1)...(n/x)]
+eg.(Permutation Restoration-1900 Codeforces)
 
+#If you take modulo of a number n with any number,n reduces by more than n/2.
+
+#Property of floor function: Suppose floor value of n/x=i,then i<=n/x<i+1.
