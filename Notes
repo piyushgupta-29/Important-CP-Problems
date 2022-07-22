@@ -22,3 +22,14 @@ eg.(Permutation Restoration-1900 Codeforces)
 #If you take modulo of a number n with any number,n reduces by more than n/2.
 
 #Property of floor function: Suppose floor value of n/x=i,then i<=n/x<i+1.
+
+#To run a multinode BFS, just add those multiple nodes in the queue at the beginning
+and then run a normal BFS.
+
+#For query question, you do not need to answer the queries in the given order,i.e you can sort the queries.
+
+#If dfs or bfs is not possible for graph, go for dsu by 
+
+#When you cannot decide the root of the tree as dfs from every node can be an optimal answer,
+then fix the root and then calculate the answer for other nodes.
+e.g.Choosing Capital for Treeland
