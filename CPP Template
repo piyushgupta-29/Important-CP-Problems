@@ -293,6 +293,7 @@ ll kth_parent(ll node,vvll &dp,ll k)
 {
     if(k==0)
         return node;
-    ll max_pow=pow(2,log2(k));  // log2(k) will return the highest set bit in k
-    return kth_parent(dp[node][log2(k)],dp,k-max_pow);
+    ll log_val=log2(k);  // log2(k) will return the highest set bit in k
+    ll max_pow=pow(2,log_val); 
+    return kth_parent(dp[node][log_val],dp,k-max_pow);
 }
