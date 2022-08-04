@@ -1,22 +1,7 @@
-//problem started at:  paused at:  resumed at:
-#include<bits/stdc++.h>
-using namespace std;
- 
-#define boost ios_base::sync_with_stdio(false);cin.tie(NULL)
-#define endl "\n"
-#define ll long long int
-#define mod 1000000007
-#define vll vector<ll>
-#define vvll vector<vll>
-#define pb push_back
-#define mll map<ll,ll>
-#define pll pair<ll,ll>
- 
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
 using namespace __gnu_pbds;
 #define ordered_set tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update>
-const ll N=1000001;
 ll factorialNumInverse[N + 1];
 ll naturalNumInverse[N + 1];
 ll spf[N + 1];
@@ -149,6 +134,24 @@ ll nPr(ll n,ll r)
 {
     return (fact[n]*factorialNumInverse[n-r])%mod;
 }
+ll add(ll x, ll y)
+{
+    x += y;
+    if (x >= mod) 
+        return x - mod;
+    return x;
+}
+ll sub(ll x, ll y) 
+{
+    x -= y;
+    if (x < 0) 
+        return x + mod;
+    return x;
+}
+ll mult(ll x, ll y) 
+{
+    return (x * y) % mod;
+}
 
 // dsu
 ll getparent(ll a,vll &parent)
@@ -199,6 +202,7 @@ string dectobin(ll n)
 //Segment Tree
 //Segment Tree has a size of 4 times that of normal array i.e(4*n)
 //Segment Tree is a full binary tree
+//1-based array implementation
 void build(vll &a,vll &seg,ll s,ll e,ll tidx)
 {
     if(s==e)
@@ -237,14 +241,58 @@ ll query(vll &seg,ll s,ll e,ll tidx,ll left,ll right)
     ll a2=query(seg,mid+1,e,2*tidx+1,left,right);
     return a1+a2;
 }
-int main()
+//1 based array indexing 
+void buildSparseTable(vll &a,vvll &dp)
 {
-    boost;
-    ll t,n,i,x,y,m,p,q,sum,ans,cnt,mx,mn,j,k;
-    cin>>t;
-    while(t--)
+    ll n=a.size();
+    for (ll i=1;i<=n;i++)
+        dp[i][0] = a[i];
+    for(ll i=n;i>=1;i--)
     {
-        sum=0;cnt=0;ans=0;mx=INT_MIN;mn=1e18;
-        
+        for(ll j=1;j<=30;j++)
+        {
+            if(i+(1<<j)<=n)
+                dp[i][j]=__gcd(dp[i][j-1],dp[i+(1<<(j-1))][j-1]);
+        }
     }
+}
+ll querySparseTable(vvll &dp,ll l,ll r)
+{
+    ll ans=a[l];
+    for(ll i=30;i>=0;i--)
+    {
+        if(l+(1<<i)<=r)
+        {
+            ans=__gcd(ans,dp[l][i]);
+            l+=(1<<i);
+        }
+    }
+    ans=__gcd(ans,a[r]);  // not necessary but safe to handle border cases
+    return ans;
+}
+// Binary Lifting(finding kth parent of a node)
+void parentdfs(vvll &a,vvll &dp,ll c,ll p)
+{
+    for(auto it:a[c])
+    {
+        if(it!=p)
+        {
+            dp[it][0]=c;
+            parentdfs(a,dp,it,c);
+        }
+    }
+}
+void binaryLifting(vvll &a,vvll &dp,ll c,ll p,ll n)
+{
+    parentdfs(a,dp,1,-1);
+    for(ll j=1;j<30;j++)
+        for(ll i=1;i<=n;i++)
+            dp[i][j]=dp[dp[i][j-1]][j-1];  // to find the 4th parent of i we find the 2nd parent of 2nd parent of i
+}
+ll kth_parent(ll node,vvll &dp,ll k)
+{
+    if(k==0)
+        return node;
+    ll max_pow=pow(2,log2(k));  // log2(k) will return the highest set bit in k
+    return kth_parent(dp[node][log2(k)],dp,k-max_pow);
 }
