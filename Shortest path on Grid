@@ -1,0 +1,94 @@
+Cycle in a Maze(1700)
+
+Solution: 
+
+#include <bits/stdc++.h>
+using namespace std;
+char ch[1005][1005];
+char dir[4]={'D','L','R','U'};
+int dx[4]={1,0,0,-1};
+int dy[4]={0,-1,1,0};
+int d[1005][1005];
+int tx,ty;
+queue <pair<int,int>> q;
+void bfs(int x,int y)
+{
+    memset(d,-1,sizeof(d));
+    d[x][y]=0;
+    q.push({x,y});
+    while(!q.empty())
+    {
+        pair<int,int> pos=q.front();
+        q.pop();
+        for(int i=0;i<4;i++)
+        {
+            tx=pos.first+dx[i];
+            ty=pos.second+dy[i];
+            if(ch[tx][ty]=='.' && d[tx][ty]==-1)
+            {
+                d[tx][ty]=d[pos.first][pos.second]+1;
+                q.push({tx,ty});
+            }
+        }
+    }
+    return;
+}
+int32_t main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+    int sx,sy,n,m,k;
+    cin>>n>>m>>k;
+    for(int i=1;i<=n;i++)
+    {
+        for(int j=1;j<=m;j++)
+        {
+            cin>>ch[i][j];
+            if(ch[i][j]=='X')
+            {
+                sx=i;
+                sy=j;
+                ch[i][j]='.';
+            }
+        }
+    }
+    if(k & 1)
+    {
+        cout<<"IMPOSSIBLE";
+        return 0;
+    }
+    bfs(sx,sy);
+    // for(int i=1;i<=n;i++)
+    // {
+    //     for(int j=1;j<=m;j++)
+    //         cout<<d[i][j]<<' ';
+    //     cout<<endl;
+    // }
+    string ans;
+    while(k)
+    {
+        bool flag=false;
+        for(int i=0;i<4;i++)
+        {
+            tx=sx+dx[i];
+            ty=sy+dy[i];
+            if(ch[tx][ty]=='.' && d[tx][ty]<=k)
+            {
+                ans+=dir[i];
+                flag=true;
+                sx=tx;
+                sy=ty;
+                break;
+            }
+        }
+        if(!flag)
+        {
+            cout<<"IMPOSSIBLE";
+            return 0;
+        }
+        k--;
+    }
+    cout<<ans;
+    return 0;
+}
