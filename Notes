@@ -1,4 +1,5 @@
-#The number of times a number x appears in n! is 
+Number Theory:
+1)The number of times a number x appears in n! is 
 i=1;ans=0;
 while(n/pow(x,i)>0)
 {
@@ -8,7 +9,7 @@ while(n/pow(x,i)>0)
 i.e x appears in n! n/x^1+n/x^2.... times
 e.g 2 appears in 5! 5/2+5/4+5/8...=2+1+0+0..=3times
 
-#The number of numbers i such that n/i gives a fixed integer value x are:
+2)The number of numbers i such that n/i gives a fixed integer value x are:
 [(n+x+1)/(x+1)...(n/x)]
 Proof:
 n/i>=x     ...(1)
@@ -19,17 +20,51 @@ n+1<=i*(x+1)  (from eq(2))
 Therefore form eq(3) and (4) we get the range[(n+x+1)/(x+1)...(n/x)]
 eg.(Permutation Restoration-1900 Codeforces)
 
-#If you take modulo of a number n with any number,n reduces by more than n/2.
+3)If you take modulo of a number n with any number,n reduces by more than n/2.
 
-#Property of floor function: Suppose floor value of n/x=i,then i<=n/x<i+1.
+4)Property of floor function: Suppose floor value of n/x=i,then i<=n/x<i+1.
 
-#To run a multinode BFS, just add those multiple nodes in the queue at the beginning
-and then run a normal BFS.
+5)For each i going from 1 to sqrt(n) will give unique value of n/i.
 
-#For query question, you do not need to answer the queries in the given order,i.e you can sort the queries.
+6)For query question, you do not need to answer the queries in the given order,i.e you can sort the queries.
 
-#If dfs or bfs is not possible for graph, go for dsu by 
+7)Fi(n)=Number of positive integers less than n that are relatively prime to n.
+  1.If n is prime, Fi(n)=n-1 e.g Fi(5)=4.
+  2.If n=p*q, where p and q are primes, Fi(n)=(p-1)(q-1) e.g Fi(15)=8.
+  3.If n=a*b, where either a or b is composite, Fi(n)=n*((p1-1)/p1)*((p2-1)/p2)...  where p1 and p2 are prime factors of n
+    e.g n=1000, 1000=2^3*5^3, Fi(1000)=1000*(1-1/2)*(1-1/5)=1000*(1/2)*(4/5)=400
 
-#When you cannot decide the root of the tree as dfs from every node can be an optimal answer,
+8)Euler's Theorem: a^Fi(n)=1%n.
+
+9)Gcd(x,y)=Gcd(x-y,y).
+
+Trees and Graphs:
+1)If dfs or bfs is not possible for graph, go for dsu by joining components using 
+edgelist(if edges are weighted)
+
+2)When you cannot decide the root of the tree as dfs from every node can be an optimal answer,
 then fix the root and then calculate the answer for other nodes.
 e.g.Choosing Capital for Treeland
+
+3)If you run a bfs on root of a tree,then the leaf node which is farthest from root will always
+be one of the end of the diameter.
+
+6)To run a multinode BFS, just add those multiple nodes in the queue at the beginning
+and then run a normal BFS.
+
+Bracket Sequence:
+1)To check if a bracket sequence(s) consisting of '(',')','?' is valid,a subarray must satisfy 3 conditions:
+1.length of subarray(|s|) must be even
+2.Replace '?' with '(', if s[i]='(' || s[i]='?' then cnt++ else if s[i]=')' then cnt--
+ and check at every point from going from 0 to |s|, cnt('(') >=0 
+3.Replace '?' with ')', if s[i]=')' || s[i]=='?' then cnt++ else if s[i]=='(' then cnt--
+ and check at every point from going from 0 to |s|, cnt('(') >=0
+e.g. The Monster(Codeforces)
+
+
+
+IndiaBix: (Completed)
+1)Logical Reasoning-Number Series
+
+
+
