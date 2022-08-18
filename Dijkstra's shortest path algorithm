@@ -16,42 +16,34 @@ using namespace std;
 int main()
 {
     boost;
-    ll t,n,i,x,y,j,k,m,p,mn,mx,cnt,sum,ans;
+    ll t,n,i,x,y,j,k,m,mn,mx,cnt,sum,ans;
     cin>>t;
     while(t--)
     {
         sum=0;cnt=0;ans=0;mn=1e18;mx=INT_MIN;
         cin>>n>>m;
-        vvll a(n+1);vll vis(n+1);vll dp(n+1,1e9);map<pll,ll> mp;
+        vector<vector<pll>> a(n+1);vll dp(n+1,1e9);
         for(i=0;i<m;i++) 
         {
             ll u,v,w;
             cin>>u>>v>>w;
-            a[u].pb(v);a[v].pb(u);
-            mp[{u,v}]=w;mp[{v,u}]=w;
+            a[u].pb({v,w});a[v].pb({u,w});
         }
-        queue<ll> q;priority_queue<ll,vll,greater<ll>> pq;
+        priority_queue<pll,vector<pll>,greater<pll>> pq;
         dp[1]=0;
-        q.push(1);
-        while(!q.empty())
+        pq.push({0,1});
+        while(!pq.empty())
         {
-            x=q.front();
-            q.pop();
-            vis[x]=1;
+            x=pq.top().second;
+            pq.pop();
             for(auto it:a[x])
             {
-                if(!vis[it]&&dp[x]+mp[{x,it}]<dp[it])
+                if(dp[x]+it.second<dp[it.first])
                 {
-                    dp[it]=dp[x]+mp[{x,it}];
-                    pq.push(it);
+                    dp[it.first]=dp[x]+it.second;
+                    pq.push({dp[it.first],it.first});
                 }
             }
-            while(!pq.empty())
-            {
-                q.push(pq.top());
-                pq.pop();
-            }
-            cout<<endl;
         }
         for(i=1;i<=n;i++) 
             cout<<dp[i]<<' ';
