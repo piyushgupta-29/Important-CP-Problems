@@ -1,0 +1,60 @@
+//problem started at:  paused at:  resumed at:
+#include<bits/stdc++.h>
+using namespace std;
+ 
+#define boost ios_base::sync_with_stdio(false);cin.tie(NULL)
+#define endl "\n"
+#define ll long long int
+#define mod 1000000007
+#define vll vector<ll>
+#define vvll vector<vll>
+#define pb push_back
+#define mll map<ll,ll>
+#define pll pair<ll,ll>
+#define N 1000005
+
+int main()
+{
+    boost;
+    ll t,n,i,x,y,j,k,m,p,mn,mx,cnt,sum,ans;
+    cin>>t;
+    while(t--)
+    {
+        sum=0;cnt=0;ans=0;mn=1e18;mx=INT_MIN;
+        cin>>n>>m;
+        vvll a(n+1);vll vis(n+1);vll dp(n+1,1e9);map<pll,ll> mp;
+        for(i=0;i<m;i++) 
+        {
+            ll u,v,w;
+            cin>>u>>v>>w;
+            a[u].pb(v);a[v].pb(u);
+            mp[{u,v}]=w;mp[{v,u}]=w;
+        }
+        queue<ll> q;priority_queue<ll,vll,greater<ll>> pq;
+        dp[1]=0;
+        q.push(1);
+        while(!q.empty())
+        {
+            x=q.front();
+            q.pop();
+            vis[x]=1;
+            for(auto it:a[x])
+            {
+                if(!vis[it]&&dp[x]+mp[{x,it}]<dp[it])
+                {
+                    dp[it]=dp[x]+mp[{x,it}];
+                    pq.push(it);
+                }
+            }
+            while(!pq.empty())
+            {
+                q.push(pq.top());
+                pq.pop();
+            }
+            cout<<endl;
+        }
+        for(i=1;i<=n;i++) 
+            cout<<dp[i]<<' ';
+        cout<<endl;
+    }
+}
