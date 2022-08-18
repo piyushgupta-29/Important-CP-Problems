@@ -1,0 +1,63 @@
+//problem started at:  paused at:  resumed at:
+#include<bits/stdc++.h>
+using namespace std;
+ 
+#define boost ios_base::sync_with_stdio(false);cin.tie(NULL)
+#define endl "\n"
+#define ll long long int
+#define mod 1000000007
+#define vll vector<ll>
+#define vvll vector<vll>
+#define pb push_back
+#define mll map<ll,ll>
+#define pll pair<ll,ll>
+#define N 1000005
+
+// dsu
+ll getparent(ll a,vll &parent)
+{
+    return parent[a]=(parent[a]==a?a:getparent(parent[a],parent));
+}
+void getunion(ll a,ll b,vll &parent,vll &size)
+{
+    a=getparent(a,parent);
+    b=getparent(b,parent);
+    if(size[b]>size[a])
+    {
+        parent[a]=b;
+        size[b]+=size[a];
+    }
+    else
+    {
+        parent[b]=a;
+        size[a]+=size[b];
+    }
+}
+int main()
+{
+    boost;
+    ll t,n,i,x,y,j,k,m,mn,mx,cnt,sum,ans;
+    cin>>t;
+    while(t--)
+    {
+        sum=0;cnt=0;ans=0;mn=1e18;mx=INT_MIN;
+        cin>>n>>m;
+        priority_queue<pair<ll,pll>,vector<pair<ll,pll>>,greater<pair<ll,pll>>> pq;
+        vll par(n+1),size(n+1,1);
+        for(i=1;i<=n;i++) par[i]=i;
+        for(i=0;i<m;i++) 
+        {
+            ll u,v,w;
+            cin>>u>>v>>w;
+            pq.push({w,{u,v}});
+        }
+        while(!pq.empty())
+        {
+            ll w=pq.top().first;ll u=pq.top().second.first;ll v=pq.top().second.second;
+            pq.pop();
+            if(par[u]!=par[v])
+                ans+=w,getunion(u,v,par,size);
+        }
+        cout<<ans<<endl;
+    }
+}
