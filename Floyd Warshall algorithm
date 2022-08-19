@@ -1,0 +1,58 @@
+//Video Editorial
+//https://www.youtube.com/watch?v=5MEZXOyaRmk&list=PLauivoElc3ghxyYSr_sVnDUc_ynPk6iXE&index=17
+
+//Floyd Warshall all pair shortest path algorithm
+//handles negative edges
+//does not handle negative weight cycle
+#include<bits/stdc++.h>
+using namespace std;
+ 
+#define boost ios_base::sync_with_stdio(false);cin.tie(NULL)
+#define endl "\n"
+#define ll long long int
+#define mod 1000000007
+#define vll vector<ll>
+#define vvll vector<vll>
+#define pb push_back
+#define mll map<ll,ll>
+#define pll pair<ll,ll>
+#define N 10005
+
+vvll dp(N,vll(N));
+
+
+int main()
+{
+    boost;
+    ll t,n,i,x,y,j,k,m,p,q,mn,mx,cnt,sum,ans;
+    cin>>t;
+    while(t--)
+    {
+        sum=0;cnt=0;ans=0;mn=1e18;mx=INT_MIN;
+        cin>>n>>m;
+        for(i=1;i<=n;i++) 
+        {
+            for(j=1;j<=n;j++)
+            {
+                if(i==j) dp[i][j]=0;
+                else dp[i][j]=INT_MAX;
+            }
+        }
+        for(i=0;i<m;i++)
+        {
+            ll u,v,w;
+            cin>>u>>v>>w;
+            dp[u][v]=w;dp[v][u]=w;
+        }
+        for(k=1;k<=n;k++)
+            for(i=1;i<=n;i++)
+                for(j=1;j<=n;j++)
+                    dp[i][j]=min(dp[i][j],dp[i][k]+dp[k][j]);
+        for(i=1;i<=n;i++)
+        {
+            for(j=1;j<=n;j++)
+                cout<<dp[i][j]<<' ';
+            cout<<endl;
+        }   
+    }
+}
