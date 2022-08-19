@@ -1,0 +1,56 @@
+//Video Editorial
+//https://www.youtube.com/watch?v=SQOQ99stCas&list=PLauivoElc3ghxyYSr_sVnDUc_ynPk6iXE&index=14
+#include<bits/stdc++.h>
+using namespace std;
+ 
+#define boost ios_base::sync_with_stdio(false);cin.tie(NULL)
+#define endl "\n"
+#define ll long long int
+#define mod 1000000007
+#define vll vector<ll>
+#define vvll vector<vll>
+#define pb push_back
+#define mll map<ll,ll>
+#define pll pair<ll,ll>
+#define N 1000005
+
+int main()
+{
+    boost;
+    ll t,n,i,x,y,j,k,m,p,mn,mx,cnt,sum,ans;
+    cin>>t;
+    while(t--)
+    {
+        sum=0;cnt=0;ans=0;mn=1e18;mx=INT_MIN;
+        cin>>n>>m;
+        vector<vector<pll>> g(n+1);vll lev(n+1,mn);
+        for(i=0;i<m;i++)
+        {
+            ll u,v;
+            cin>>u>>v;
+            if(u==v) continue; 
+            g[u].pb({v,0});
+            g[v].pb({u,1});
+        }
+        deque<int> q;
+        q.push_back(1);
+        lev[1]=0;
+        while(!q.empty())
+        {
+            x=q.front();
+            q.pop_front();
+            for(auto it:g[x])
+            {
+                if(lev[x]+it.second<lev[it.first])
+                {
+                    lev[it.first]=lev[x]+it.second;
+                    if(it.second==1)
+                        q.push_back(it.first);
+                    else   
+                        q.push_front(it.first);
+                }
+            }
+        }   
+        cout<<lev[n]<<endl;
+    }
+}
