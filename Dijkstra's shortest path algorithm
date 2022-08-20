@@ -24,7 +24,7 @@ int main()
     {
         sum=0;cnt=0;ans=0;mn=1e18;mx=INT_MIN;
         cin>>n>>m;
-        vector<vector<pll>> a(n+1);vll dp(n+1,1e9);vll vis(n+1);
+        vector<vector<pll>> a(n+1);vll dp(n+1,mn);vll vis(n+1);
         for(i=0;i<m;i++) 
         {
             ll u,v,w;
