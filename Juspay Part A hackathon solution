@@ -14,7 +14,7 @@ using namespace std;
 #define N 500005
 
 map<string,ll> mp;
-vll vis(N),par(N),lck(N),vis(N),v;
+vll vis(N),par(N),lck(N),vis(N),v,freeze(N);
 vvll a(N);
 ll flag;
 
@@ -76,7 +76,7 @@ int main()
         k=mp[s];
         if(i==2)
         {
-            if(lck[k]==x) { cout<<"true"<<endl; lck[k]=0; }
+            if(lck[k]!=x) { cout<<"true"<<endl; lck[k]=0; }
             else { cout<<"false"<<endl; }
         }
         else if(i==1)
@@ -85,7 +85,7 @@ int main()
             while(u!=-1)
             {
                 if(lck[u]) { sum++; break; }
-                else { cout<<"false"<<endl; }
+                u=par[u];
             }
             sum+=checklock(k,par[k]);
             if(sum) { cout<<"false"<<endl; }
