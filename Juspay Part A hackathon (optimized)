@@ -127,3 +127,11 @@ int main()
         }
     }
 }
+
+//          world                           1
+//          /   \                          / \
+//         /     \                        /   \
+//       asia     europe                 2     5
+//       /  \      /   \                / \    /\
+//      /    \   france italy          /   \  6  7
+//    china  india                    3     4
