@@ -1,0 +1,129 @@
+//problem started at:  paused at:  resumed at:
+#include<bits/stdc++.h>
+using namespace std;
+ 
+#define boost ios_base::sync_with_stdio(false);cin.tie(NULL)
+#define endl "\n"
+#define ll long long int
+#define mod 1000000007
+#define vll vector<ll>
+#define vvll vector<vll>
+#define pb push_back
+#define mll map<ll,ll>
+#define pll pair<ll,ll>
+#define N 500005
+
+map<string,ll> mp;
+vll vis(N),par(N),lck(N),sub(N);
+set<ll> v;
+vector<set<ll>> freeze(N);
+vvll a(N);
+ll flag,m,n,idx;
+vector<string> s(N);
+
+void build(ll c,ll h)
+{
+    if(h==0) return ;
+    for(ll i=0;i<m;i++) 
+    {
+        idx++;
+        a[c].pb(idx); 
+        build(idx,h-1);
+    }
+}
+ll getsubtree(ll c,ll p)
+{
+    par[c]=p;
+    sub[c]=1;
+    for(auto it:a[c])
+    {
+        if(it==p) continue; 
+        sub[c]+=getsubtree(it,c);
+    }
+    return sub[c];
+}
+
+int main()
+{
+    boost;
+    ll t,i,x,y,j,k,p,mn,mx,cnt,sum,ans;
+    sum=0;cnt=0;ans=0;mn=1e18;mx=INT_MIN;
+    cin>>n>>m>>t;
+    ll h=1;x=1;
+    while(x+pow(m,h)<=n)
+    {
+        x+=pow(m,h);
+        h++;
+    }
+    for(i=1;i<=n;i++) cin>>s[i];
+    idx=1;
+    build(1,h-1);
+    queue<ll> qu;
+    qu.push(1);i=2;mp[s[1]]=1;
+    while(!qu.empty())
+    {
+        x=qu.front();
+        qu.pop();
+        for(auto it:a[x])
+            qu.push(it),mp[s[i++]]=it;
+    }
+    getsubtree(1,-1);
+    while(t--)
+    {
+        string st;
+        cin>>i>>st>>x;x++;
+        k=mp[st];
+        if(i==2)
+        {
+            if(lck[k]==x) 
+            {   
+                cout<<"true"<<endl; 
+                lck[k]=0; 
+                v.erase(k);
+                ll u=k;
+                while(u!=-1) { freeze[u].erase(u); u=par[u]; }
+            }
+            else { cout<<"false"<<endl; }
+        }
+        else if(i==1)
+        {
+            ll u=k,sum=0;
+            if(freeze[k].size()) { cout<<"false"<<endl; continue; }
+            while(u!=-1)
+            {
+                if(lck[u]) { sum++; break; }
+                u=par[u];
+            }
+            if(sum) { cout<<"false"<<endl; continue; }
+            cout<<"true"<<endl;
+            lck[k]=x;
+            v.insert(k);
+            u=k;
+            while(u!=-1) { freeze[u].insert(x); u=par[u]; }
+        }
+        else 
+        {
+            if(lck[k]||freeze[k].size()>1||!freeze[k].size()) { cout<<"false"<<endl; continue; }
+            if(*(freeze[k].begin())!=x) { cout<<"false"<<endl; continue; }
+            cout<<"true"<<endl;
+            lck[k]=x;
+            freeze[k].insert(x);
+            auto pos=v.lower_bound(k);
+            queue<ll> q;
+            for(auto it=pos;it!=v.end();it++)
+            {
+                if(*it>k+sub[k]) { break; }
+                q.push(*it);
+            }
+            while(!q.empty())
+            {
+                ll u=q.front();
+                lck[u]=0;freeze[u].clear();
+                q.pop();
+                if(par[u]!=k&&par[u]!=-1) 
+                    q.push(par[u]);
+            }
+            v.insert(k);
+        }
+    }
+}
