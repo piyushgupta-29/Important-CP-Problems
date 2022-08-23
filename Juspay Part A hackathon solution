@@ -1,0 +1,110 @@
+//problem started at:  paused at:  resumed at:
+#include<bits/stdc++.h>
+using namespace std;
+ 
+#define boost ios_base::sync_with_stdio(false);cin.tie(NULL)
+#define endl "\n"
+#define ll long long int
+#define mod 1000000007
+#define vll vector<ll>
+#define vvll vector<vll>
+#define pb push_back
+#define mll map<ll,ll>
+#define pll pair<ll,ll>
+#define N 500005
+
+map<string,ll> mp;
+vll vis(N),par(N),lck(N),vis(N),v;
+vvll a(N);
+ll flag;
+
+void getparent(ll c,ll p)
+{
+    par[c]=p;
+    for(auto it:a[c])
+    {
+        if(it==p) continue; 
+        getparent(it,c);
+    }
+}
+ll checklock(ll c,ll p)
+{
+    ll sum=(lck[c]?1:0);
+    if(sum) return 1;
+    for(auto it:a[c])
+    {
+        if(it==p) continue; 
+        sum+=checklock(it,c);
+    }
+    return sum;
+}
+ll checkupgrade(ll c,ll p,ll k)
+{
+    ll sum=0;
+    if(lck[k]&&lck[c]!=k) { flag=0; return 0; }
+    if(lck[c]==k) sum++,v.pb(c);
+    for(auto it:a[c])
+    {
+        if(it==p) continue; 
+        sum+=checkupgrade(it,c,k);
+    }
+    return sum;
+}
+
+int main()
+{
+    boost;
+    ll t,n,i,x,y,j,k,m,p,q,mn,mx,cnt,sum,ans;
+    sum=0;cnt=0;ans=0;mn=1e18;mx=INT_MIN;
+    string s; 
+    cin>>n>>m>>q;
+    for(i=1;i<=n;i++) cin>>s,mp[s]=i;
+    queue<ll> qu;
+    qu.push(1);
+    vis[1]=1;i=2;
+    while(i<n)
+    {
+        x=qu.front();
+        qu.pop();
+        for(j=0;j<m;j++)
+            a[x].pb(i),qu.push(i),i++;
+    }
+    getparent(1,-1);
+    while(q--)
+    {
+        cin>>i>>s>>x;
+        k=mp[s];
+        if(i==2)
+        {
+            if(lck[k]==x) { cout<<"true"<<endl; lck[k]=0; }
+            else { cout<<"false"<<endl; }
+        }
+        else if(i==1)
+        {
+            ll u=k,sum=0;
+            while(u!=-1)
+            {
+                if(lck[u]) { sum++; break; }
+                else { cout<<"false"<<endl; }
+            }
+            sum+=checklock(k,par[k]);
+            if(sum) { cout<<"false"<<endl; }
+            else { cout<<"true"<<endl; lck[k]=x; }
+        }
+        else 
+        {
+            if(lck[k]) { cout<<"false"<<endl; continue; }
+            v.clear();
+            flag=1;
+            sum=checkupgrade(k,par[k],x); 
+            if(!sum||!flag) { cout<<"false"<<endl; }
+            else 
+            {
+                cout<<"true"<<endl;
+                lck[k]=x;
+                for(auto it:v)
+                    lck[it]=0;
+            }
+        }
+    }
+}
