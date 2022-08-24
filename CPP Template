@@ -31,10 +31,6 @@ ll fact[N + 1];
 //7.Binary to decimal
 //8.Decimal to binary
 //9.Segment Tree
-//10.Sparse Table
-//11.Binary Lifting
-//12.Finding LCA
-
 //z array
 vector<ll> z_function(string s) {
     ll n = (ll) s.length();
@@ -336,6 +332,20 @@ ll find_lca(ll a,ll b,vll &level,vvll &par)
         }
     }
     return par[a][0];
+}
+void eulertour(vll &start,vll &end,vll &flat_tree,vvll &a,ll &cnt,ll c,ll p)
+{
+    start[c]=cnt;
+    flat_tree[cnt]=c;
+    cnt++;
+    for(auto it:a[c])
+    {
+        if(it==p) continue; 
+        eulertour(start,end,flat_tree,a,cnt,it,c);
+    }
+    end[c]=cnt;
+    flat_tree[cnt]=c;
+    cnt++;
 }
 int main()
 {
