@@ -1,3 +1,18 @@
+//problem started at:  paused at:  resumed at:
+#include<bits/stdc++.h>
+using namespace std;
+ 
+#define boost ios_base::sync_with_stdio(false);cin.tie(NULL)
+#define endl "\n"
+#define ll long long int
+#define mod 1000000007
+#define vll vector<ll>
+#define vvll vector<vll>
+#define pb push_back
+#define mll map<ll,ll>
+#define pll pair<ll,ll>
+#define N 200005
+
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
 using namespace __gnu_pbds;
@@ -152,7 +167,10 @@ ll mult(ll x, ll y)
 {
     return (x * y) % mod;
 }
-
+ll divide(ll x,ll y)
+{
+    return mult(x,power(y,mod-2));
+}
 // dsu
 ll getparent(ll a,vll &parent)
 {
@@ -256,7 +274,7 @@ void buildSparseTable(vll &a,vvll &dp)
         }
     }
 }
-ll querySparseTable(vvll &dp,ll l,ll r)
+ll querySparseTable(vll &a,vvll &dp,ll l,ll r)
 {
     ll ans=a[l];
     for(ll i=30;i>=0;i--)
@@ -271,29 +289,54 @@ ll querySparseTable(vvll &dp,ll l,ll r)
     return ans;
 }
 // Binary Lifting(finding kth parent of a node)
-void parentdfs(vvll &a,vvll &dp,ll c,ll p)
+void parentdfs(vvll &a,vvll &par,vll &level,ll c,ll p,ll x)
 {
+    level[c]=x;
     for(auto it:a[c])
     {
         if(it!=p)
         {
-            dp[it][0]=c;
-            parentdfs(a,dp,it,c);
+            par[it][0]=c;
+            parentdfs(a,par,level,it,c,x+1);
         }
     }
 }
-void binaryLifting(vvll &a,vvll &dp,ll c,ll p,ll n)
+void binaryLifting(vvll &a,vvll &par,vll &level,ll c,ll p,ll n)
 {
-    parentdfs(a,dp,1,-1);
+    parentdfs(a,par,level,1,-1,0);
     for(ll j=1;j<30;j++)
         for(ll i=1;i<=n;i++)
-            dp[i][j]=dp[dp[i][j-1]][j-1];  // to find the 4th parent of i we find the 2nd parent of 2nd parent of i
+            par[i][j]=par[par[i][j-1]][j-1];  // to find the 4th parent of i we find the 2nd parent of 2nd parent of i
 }
-ll kth_parent(ll node,vvll &dp,ll k)
+ll kth_parent(ll node,vvll &par,ll k)
 {
     if(k==0)
         return node;
     ll log_val=log2(k);  // log2(k) will return the highest set bit in k
-    ll max_pow=pow(2,log_val); 
-    return kth_parent(dp[node][log_val],dp,k-max_pow);
+    ll max_pow=(1<<log_val); 
+    return kth_parent(par[node][log_val],par,k-max_pow);
+}
+ll find_lca(ll a,ll b,vll &level,vvll &par)
+{
+    if(level[a]>level[b])
+        swap(a,b);
+    ll d=level[b]-level[a];
+    b=kth_parent(b,par,d);
+    if(a==b) return a;
+    for(ll i=33;i>=0;i--)
+    {
+        if(par[a][i]!=-1&&par[a][i]!=par[b][i])
+        {
+            a=par[a][i];
+            b=par[b][i];
+        }
+    }
+    return par[a][0];
+}
+int main()
+{
+    boost;
+    ll t,n,i,x,y,j,k,m,p,q,mn,mx,cnt,sum,ans;
+    sum=0;cnt=0;ans=0;mn=1e18;mx=INT_MIN;
+    
 }
