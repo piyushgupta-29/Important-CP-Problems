@@ -81,7 +81,7 @@ int main()
                 lck[k]=0; 
                 v.erase(k);
                 ll u=k;
-                while(u!=-1) { freeze[u].erase(u); u=par[u]; }
+                while(u!=-1) { freeze[u].erase(x); u=par[u]; }
             }
             else { cout<<"false"<<endl; }
         }
