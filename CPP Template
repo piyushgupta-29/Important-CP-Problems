@@ -22,16 +22,6 @@ ll naturalNumInverse[N + 1];
 ll spf[N + 1];
 ll fact[N + 1];
 
-//1.Z function
-//2.Kadane's Algorithm
-//3.Sieve of Eratostheness
-//4.Prime Factorization(void sieve()+getFactorization())
-//5.Function to calculate nCr and nPr
-//6.Disjoint set union
-//7.Binary to decimal
-//8.Decimal to binary
-//9.Segment Tree
-//z array
 vector<ll> z_function(string s) {
     ll n = (ll) s.length();
     vector<ll> z(n);
@@ -333,6 +323,7 @@ ll find_lca(ll a,ll b,vll &level,vvll &par)
     }
     return par[a][0];
 }
+//Euler Tour
 void eulertour(vll &start,vll &end,vll &flat_tree,vvll &a,ll &cnt,ll c,ll p)
 {
     start[c]=cnt;
