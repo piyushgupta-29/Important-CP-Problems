@@ -87,7 +87,7 @@ int main()
         }
         else if(i==1)
         {
-            ll u=k,sum=0;
+            ll u=k;sum=0;
             if(freeze[k].size()) { cout<<"false"<<endl; continue; }
             while(u!=-1)
             {
