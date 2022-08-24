@@ -1,0 +1,45 @@
+// Binary Lifting(finding kth parent of a node)
+void parentdfs(vvll &a,vvll &par,vll &level,ll c,ll p,ll x)
+{
+    level[c]=x;
+    for(auto it:a[c])
+    {
+        if(it!=p)
+        {
+            par[it][0]=c;
+            parentdfs(a,par,level,it,c,x+1);
+        }
+    }
+}
+void binaryLifting(vvll &a,vvll &par,vll &level,ll c,ll p,ll n)
+{
+    parentdfs(a,par,level,1,-1,0);
+    for(ll j=1;j<30;j++)
+        for(ll i=1;i<=n;i++)
+            par[i][j]=par[par[i][j-1]][j-1];  // to find the 4th parent of i we find the 2nd parent of 2nd parent of i
+}
+ll kth_parent(ll node,vvll &par,ll k)
+{
+    if(k==0)
+        return node;
+    ll log_val=log2(k);  // log2(k) will return the highest set bit in k
+    ll max_pow=(1<<log_val); 
+    return kth_parent(par[node][log_val],par,k-max_pow);
+}
+ll find_lca(ll a,ll b,vll &level,vvll &par)
+{
+    if(level[a]>level[b])
+        swap(a,b);
+    ll d=level[b]-level[a];
+    b=kth_parent(b,par,d);
+    if(a==b) return a;
+    for(ll i=33;i>=0;i--)
+    {
+        if(par[a][i]!=-1&&par[a][i]!=par[b][i])
+        {
+            a=par[a][i];
+            b=par[b][i];
+        }
+    }
+    return par[a][0];
+}
