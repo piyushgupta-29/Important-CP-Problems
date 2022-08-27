@@ -11,7 +11,7 @@ using namespace std;
 #define pb push_back
 #define mll map<ll,ll>
 #define pll pair<ll,ll>
-#define N 200005
+#define N 1000005
 
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
@@ -166,10 +166,11 @@ ll getparent(ll a,vll &parent)
 {
     return parent[a]=(parent[a]==a?a:getparent(parent[a],parent));
 }
-void getunion(ll a,ll b,vll &parent,vll &size)
+bool getunion(ll a,ll b,vll &parent,vll &size)
 {
     a=getparent(a,parent);
     b=getparent(b,parent);
+    if(a==b) return false;
     if(size[b]>size[a])
     {
         parent[a]=b;
@@ -180,6 +181,7 @@ void getunion(ll a,ll b,vll &parent,vll &size)
         parent[b]=a;
         size[a]+=size[b];
     }
+    return true;
 }
 //binary to decimal
 ll bintodec(string s)
@@ -342,6 +344,10 @@ int main()
 {
     boost;
     ll t,n,i,x,y,j,k,m,p,q,mn,mx,cnt,sum,ans;
-    sum=0;cnt=0;ans=0;mn=1e18;mx=INT_MIN;
-    
+    cin>>t;
+    while(t--)
+    {
+        sum=0;cnt=0;ans=0;mn=1e18;mx=INT_MIN;
+        
+    }
 }
