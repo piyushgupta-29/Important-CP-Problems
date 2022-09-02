@@ -55,7 +55,7 @@ int main()
         {
             ll w=pq.top().first;ll u=pq.top().second.first;ll v=pq.top().second.second;
             pq.pop();
-            if(par[u]!=par[v])
+            if(getparent(u,par)!=getparent(v,par))
                 ans+=w,getunion(u,v,par,size);
         }
         cout<<ans<<endl;
