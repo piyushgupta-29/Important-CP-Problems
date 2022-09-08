@@ -108,3 +108,11 @@ int main()
         }
     }
 }
+
+//          world                           1
+//          /   \                          / \
+//         /     \                        /   \
+//       asia     europe                 2     3
+//       /  \      /   \                / \    /\
+//      /    \   france italy          /   \  6  7
+//    china  india                    4     5
