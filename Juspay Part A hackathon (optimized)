@@ -118,7 +118,7 @@ int main()
             while(!q.empty())
             {
                 ll u=q.front();
-                lck[u]=0;freeze[u].clear();
+                lck[u]=0;freeze[u].clear();v.erase(u);
                 q.pop();
                 if(par[u]!=k&&par[u]!=-1) 
                     q.push(par[u]);
