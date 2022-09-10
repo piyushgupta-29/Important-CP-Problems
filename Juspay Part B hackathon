@@ -1,0 +1,137 @@
+#include<bits/stdc++.h>
+using namespace std;
+ 
+#define boost ios_base::sync_with_stdio(false);cin.tie(NULL)
+#define endl "\n"
+#define N 500005
+
+map<string,int> nodeNumber;
+vector<int> visited(N),parent(N),subtree(N);
+vector<pair<int,int>> lockedUser(N);
+vector<vector<int>> adjacencyList(N);
+int m,n,index;
+vector<string> s(N);
+
+void build(int child,int height)
+{
+    if(height==0) return ;
+    for(int i=0;i<m;i++) 
+    {
+        index++;
+        adjacencyList[child].push_back(index); 
+        build(index,height-1);
+    }
+}
+int getparent(int child,int p)
+{
+    parent[child]=p;
+    for(auto it:adjacencyList[child])
+    {
+        if(it==p) continue; 
+        getparent(it,child);
+    }
+}
+
+int main()
+{
+    boost;
+    int query,i,x,j,sum,nodes;
+    cin>>nodes>>m>>query;
+    int height=1;x=1;
+    while(x+pow(m,height)<=nodes)
+    {
+        x+=pow(m,height);
+        height++;
+    }
+    for(i=1;i<=nodes;i++) cin>>s[i];
+    index=1;
+    build(1,height-1);
+    queue<int> qu;
+    qu.push(1);i=2;nodeNumber[s[1]]=1;
+    while(!qu.empty())
+    {
+        x=qu.front();
+        qu.pop();
+        for(auto it:adjacencyList[x])
+            qu.push(it),nodeNumber[s[i++]]=it;
+    }
+    getparent(1,-1);
+    vector<int> doNotLock(N);
+    while(query--)
+    {
+        string nodeName;int user,queryType;
+        cin>>queryType>>nodeName>>user;
+        user++;
+        int thread_id = (rand() % 1000000000) + 1;
+        int currentNode=nodeNumber[nodeName];
+        if(queryType==2)
+        {
+            if(lockedUser[currentNode].first==user&&lockedUser[currentNode].second==-1) 
+            {   
+                int traverseParent=parent[currentNode];
+                while(traverseParent!=-1) 
+                { 
+                    doNotLock[traverseParent]=0;
+                    traverseParent=parent[traverseParent]; 
+                }
+                lockedUser[currentNode]={0,0};
+                cout<<"true"<<endl; 
+            }
+            else 
+            { 
+                cout<<"false"<<endl; 
+            }
+        }
+        else if(queryType==1)
+        {
+
+            int value=0;
+            if(lockedUser[currentNode].first) 
+            { cout<<"false"<<endl; continue; }
+            
+            lockedUser[currentNode]={user,thread_id};
+            
+            if(lockedUser[currentNode].first!=user||lockedUser[currentNode].second!=thread_id)
+            { cout<<"false"<<endl; continue; }
+
+            if(doNotLock[currentNode])
+            { 
+                lockedUser[currentNode]={0,0};
+                cout<<"false"<<endl; 
+                continue; 
+            }
+
+            int traverseParent=parent[currentNode];
+            while(traverseParent!=-1) 
+            { 
+                doNotLock[traverseParent]=1;
+
+                if(lockedUser[traverseParent].first) 
+                { 
+                    value=parent[traverseParent]; 
+                    break; 
+                }
+                traverseParent=parent[traverseParent]; 
+            }
+            
+            if(value)
+            { 
+                traverseParent=parent[currentNode];
+                while(traverseParent!=value)
+                {
+                    doNotLock[traverseParent]=0;
+                    traverseParent=parent[traverseParent];
+                }
+                lockedUser[currentNode]={0,0};
+                cout<<"false"<<endl; 
+                continue; 
+            }
+            
+            lockedUser[currentNode].second=-1;
+            cout<<"true"<<endl;
+        }
+    }
+}               
+       
+
+                   
