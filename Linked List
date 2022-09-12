@@ -64,8 +64,28 @@ bool search(node* &head,int key)
     return false;
 }
 
+void deleteAtHead(node* &head)
+{
+    node* todelete=head;
+    head=head->next;
+
+    delete todelete;    
+}
+
 void deletion(node* &head,int value)
 {
+    if(head==NULL)
+    {
+        return ;
+    }
+    if(head->next==NULL)
+    {
+        if(head->data==value)
+        {
+            deleteAtHead(head);
+        }
+        return ;
+    }
     node* temp=head;
     while(temp->next->data!=value)
     {
@@ -75,6 +95,20 @@ void deletion(node* &head,int value)
     temp->next=temp->next->next;
     
     delete todelete;
+}
+
+node* reverse(node* head)
+{
+    node* prevptr=NULL;
+    node* currptr=head;
+
+    while(currptr!=NULL)
+    {
+        currptr->next=prevptr;
+        prevptr=currptr;
+        currptr=currptr->next; 
+    }
+    return prevptr;
 }
 
 void display(node* head)
