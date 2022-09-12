@@ -63,9 +63,16 @@ e.g. The Monster(Codeforces)
 
 Note: Do not use boost for interactive terminal.
 
-IndiaBix: (Completed)
-1)Logical Reasoning-Number Series
+Kartik Arora's problem cheat sheet-"https://docs.google.com/document/d/1-wkEQSYLLaKne-6GJ4Wc_dTGmnRn5Fv_Ax64LrheK_M/edit"
 
-
-
+Aptitude:
+1: (M1*D1)/W1 = (M2*D2)/W2   ... (M represent number of men,D represents number of days,W represent work done)
+2: 0.35232323... in fraction will be (3523-35)/9900 as 23 is the recurring number.
+3: Difference between compound interest and simple interest for 2 years = P(R^2/100^2) = (S.I*R)/200.
+   Difference between compound interest and simple interest for 3 years = P(R^2/100^2)((R/100)+3).
+4: If the time in compound interest is of the form n^(a/b), then the compound interest will be = 
+   ((1+R/100)^n)*((1+(aR/b*100))).
+5: LCM of a fraction = (LCM of Numerators)/(GCD of Denominators).
+   GCD of a fraction = (GCD of Numerators)/(LCM of Denominators).
+6: If successive discount are a and b then single equivalent discount will be = a+b - (a*b)/100.
 
