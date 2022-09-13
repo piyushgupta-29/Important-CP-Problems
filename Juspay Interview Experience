@@ -1,0 +1,70 @@
+Juspay is a leading fintech company in India, which provides an online platform used for mobile-based payments. Its online platform is a SaaS on top of a payment gateway (Juspay is not a payment gateway), and offers a mobile payment browser for safe and secure transactions, to improve transaction time.
+
+I have taken a referral through a discord server named Proactivist. I got the first-round test link after one month of referral.
+
+Test Pattern: So, Firstly Understand the Test Pattern at Juspay. The Complete interview process is divided into four parts.
+
+Coding Test on the Talescale platform
+Hackathon Part is divided into two parts:
+Coding test
+One Day Hackathon type Discussion.
+Technical Round
+HR Round (In my case, the Technical Round was the last round)
+Each of the above rounds is an elimination round.
+
+Round 1 – Coding Test: The first round was a coding test round of 90 minutes, conducted on the talescale platform. This round consists of 3 DSA-based (Graph-based) questions, which you need to solve in 1.5 hours. For all three questions, the following common description was given.
+
+Problem Description: You are given a maze with N cells. Each cell may have multiple entry points but not more than one exit (i.e. entry/exit points are unidirectional doors like valves). The cells are named with an integer from 0 to N-1.
+You are given an array Edge[] of N integers, where Edge[i] contains the cell number that can be reached from the cell I in one step. Edge[i] is -1 if the ith cell doesn’t have an exit.
+
+Nearest meeting cell of two given nodes x1 and x2: I used the approach of getting the path of both the nodes and found the nearest cell from the path.
+Find the node number of the maximum weight node (The weight of a node is the sum of all nodes pointing to that node): I used the approach of storing each child in a parent node value using a hashmap.
+Find the Length of the largest cycle. the used approach of using sum at each node until the node is again repeated in the cycle.
+From the above three questions, I was able to solve the 2 questions completely, and a 7/10 test in the remaining one. I cleared the above coding round and got called for the next round which is the hackathon round.
+
+Round 2:Hackathon round: This round is further divided into 2 parts.
+
+Coding test
+One Day Hackathon discussion round.
+Round 2. 1 Coding Test: This round was conducted on the HackerEarth platform. You will be given a single problem named Tree of Space which needs to be done in 3 hours.
+Problem Description: Given an M-ary tree, the following three operations need to be performed:
+
+Lock(id, user id) – this function locks the given node id and marks it locked by userid, if ancestors, descendants, or the node itself were not locked before.
+Unlock(id, user id) – this function unlocks the given node id if it was locked by userid before.
+Upgrade(id, user id) – upgrades the lock to the node id if all the locked descendants were locked by the same userid. This function fails if any locked descendant node was locked by a different userid.
+It was quite a challenging question, I was able to solve the question after about 1.5 hours having 3-4 wrong submissions. The approach basically consists of keeping the count at each node of how many children are locked or not, and keeping which children are locked by which parent.
+
+After this round, I was selected for Part B of the hackathon round.
+
+Round 2. 2: This round was conducted on Slack with a mentor allocated to you.
+
+Problem description: This round was an upgraded round of part 1. You are asked to write part A code in such a way that it handles multithreading and avoid race condition. This round is a type of discussion round in which the interviewer will firstly ask you to describe the approach of part A Solution, then the interviewer will explain to you the multithreading and parallelism.
+
+The round starts at 11 in the morning. for starting half an hour, you are asked to describe the solution approach for part A, then you are asked to apply multithreading to your part A solution. The round gets completed in the evening (Timing depends on your solution and the interviewer). This round was a quite good round in which you deal with a new concept of the Operating System called Process Synchronization, Locking, Semaphores, mutex, etc. You get to know a quiet knowledge about this topics. I explained different approaches like locking the complete tree and using a single Flag variable, and at last, I was able to complete it with some hints from the interviewer. The overall experience of the above round was quite good, I was able to learn some new concepts of operating systems and implemented them.
+
+I was selected in the above round and moved to the next round which is the technical interview round. The recruiter will completely explain to you about the technical round and what kind of question you will ask in this round.
+
+Round 3: Technical Interview round: The interviewer joined late, but the interviewer was quite good. he told me that he was in a meeting as they got some bug at the production level, told that this is a nightmare in the life of a software engineer. After having this small conversation, he introduced himself and asked me to do the same.
+
+Topics which were asked: Mostly OS, backend related, CN, Computer architecture, etc.
+
+Some Questions:
+
+Describe Multithreading and parallelism.
+Why do we need to use a multithreading system?
+How can we achieve multithreading using a single-core CPU?
+When you press a key on the keyboard, what happens internally in the system, and how character gets printed on screen?
+What is a process?
+difference between process and thread.
+How do multiple applications run on our computer at a time?
+How does an application make communication with the CPU?
+Difference between HTTP Post and HTTP Get Request.
+Difference between IP address and mac address.
+then, he asked me to tell difference between Reactjs and AngularJs as I had mentioned Reactjs in my resume.
+There were some other questions also asked, but I don’t remember them. I was able to answer the above questions except for two or three questions, I was also not able to complete the coding questions because it was something like, you are given a file, and you need to convert that file into the zipped format.
+
+Final Verdict: I was rejected in the above round. The mistakes which I did was as follows:
+
+I was not explaining the answers in deep (As the recruiter after round 2 already told me that you have to explain the answer deeply in round 3).
+I gave the wrong answer to two or three questions.
+I was not able to complete the coding question.
