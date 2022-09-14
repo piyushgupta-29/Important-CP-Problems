@@ -56,7 +56,7 @@ int main()
             qu.push(it),nodeNumber[s[i++]]=it;
     }
     getparent(1,-1);
-    vector<int> doNotLock(N);
+    vector<int> doNotLock(N,0);
     while(query--)
     {
         string nodeName;int user,queryType;
@@ -71,7 +71,7 @@ int main()
                 int traverseParent=parent[currentNode];
                 while(traverseParent!=-1) 
                 { 
-                    doNotLock[traverseParent]=0;
+                    doNotLock[traverseParent]--;
                     traverseParent=parent[traverseParent]; 
                 }
                 lockedUser[currentNode]={0,0};
@@ -104,7 +104,7 @@ int main()
             int traverseParent=parent[currentNode];
             while(traverseParent!=-1) 
             { 
-                doNotLock[traverseParent]=1;
+                doNotLock[traverseParent]++;
 
                 if(lockedUser[traverseParent].first) 
                 { 
@@ -119,7 +119,7 @@ int main()
                 traverseParent=parent[currentNode];
                 while(traverseParent!=value)
                 {
-                    doNotLock[traverseParent]=0;
+                    doNotLock[traverseParent]--;
                     traverseParent=parent[traverseParent];
                 }
                 lockedUser[currentNode]={0,0};
