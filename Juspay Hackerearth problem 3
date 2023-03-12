@@ -1,3 +1,15 @@
+// 4
+// 2
+// 5
+// 7
+// 9
+// 4
+// 2 9 2
+// 7 2 3
+// 7 9 7
+// 9 5 1
+// 7
+// 9
 import java.io.*;
 import java.util.*;
 
@@ -16,14 +28,14 @@ class TestClass {
         int[][] fF = new int[e][2];
         for(int i=0; i < e; i++)
         {
-            fF[i] = Array.stream(br.readLine().split("\\s+")).mapToInt
+            fF[i] = Arrays.stream(br.readLine().split("\\s+")).mapToInt
             (Integer::parseInt).toArray();
         }
         
         int A = Integer.parseInt(br.readLine());
         int B = Integer.parseInt(br.readLine());
         
-        Hashmap<Integer, Integer> hmap = new HashMap<Integer, Integer>()
+        HashMap<Integer, Integer> hmap = new HashMap<Integer, Integer>()
         {{
             for (int i = 0; i < n; i++)
             {
@@ -33,11 +45,11 @@ class TestClass {
         
         int src = hmap.get(A);
         int dest = hmap.get(B);
-        Graph G = new Graph(n);
-        for(int[] edge:fF) 
+        Graph g = new Graph(n);
+        for(int[] edge :fF) 
         {
-            int u = hmap.get(e[0]);
-            int v = hmap.get(e[1]);
+            int u = hmap.get(edge[0]);
+            int v = hmap.get(edge[1]);
             int w = edge[2];
             g.addEdge(u,v,w);
         }
@@ -80,7 +92,7 @@ class Graph
         PriorityQueue<int[]> pq = new PriorityQueue<>((a,b) -> a[1] - b[1]);
         
         while(!pq.isEmpty()) {
-            int u = pq.peek()[0];
+            int u = pq.peek()[0],
             wt = pq.peek()[1];
             pq.poll();
             
