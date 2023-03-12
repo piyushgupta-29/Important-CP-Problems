@@ -29,7 +29,7 @@ class TestClass {
             {
                 putIfAbsent(members[i],i);
             }
-        }}
+        }};
         
         int src = hmap.get(A);
         int dest = hmap.get(B);
@@ -60,12 +60,14 @@ class Graph
         }
     }
     
-    public void addEdge(int src, int dest,int wt) {
-        this.adj.get(src).add(new LinkedList<Integer>(){{
+    public void addEdge(int src, int dest,int wt) 
+    {
+        this.adj.get(src).add(new LinkedList<Integer>()
+        {{
             add(dest);
             add(wt);
-        }}
-        }
+        }});
+    }
         
     public int Dij(int src, int dest)
     {
@@ -99,6 +101,5 @@ class Graph
             return -1;
         else 
             return dist[dest];
-    }
     }
 }
