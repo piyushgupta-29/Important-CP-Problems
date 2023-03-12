@@ -1,3 +1,25 @@
+// Question:
+// JS newbie "A" wants to check if he can reach out 
+// to a React expert "B" using his network of React Developers.
+// If he can then return 1 else return 0.
+
+// Input:
+// 4
+// 2
+// 5
+// 7
+// 9
+// 4
+// 2 9 
+// 7 2 
+// 7 9 
+// 9 5 
+// 7
+// 9
+
+// Output:
+// 1
+
 import java.io.*;
 import java.util.*;
 
