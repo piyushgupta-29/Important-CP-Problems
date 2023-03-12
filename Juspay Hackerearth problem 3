@@ -42,6 +42,7 @@ class TestClass {
             g.addEdge(u,v,w);
         }
         bw.write(g.Dij(src,dest) + "\n");
+        bw.flush();
     }
 }
 
