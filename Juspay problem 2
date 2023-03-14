@@ -1,4 +1,18 @@
-//problem started at:  paused at:  resumed at:
+// Question:
+
+// Given a maze with N cells. Each cell may have multiple entry points but not more than one exit(i.e entry/exit points are unidirectional doors like valves).
+// You are given an array Edge[] of N integers, where Edge[i] contains the cell number that can be reached from of cell i in one step. 
+// Edge[i] is -1 if the ith cell doesn't have an exit. 
+// Find the node number of maximum weight node (Weight of a node is the sum of node numbers of all nodes pointing to that node.
+
+// Input:
+// 1
+// 23
+// 4 4 1 4 13 8 8 8 0 8 14 9 15 11 -1 10 15 22 22 22 22 22 21 
+
+// Output:
+// 22
+
 #include<bits/stdc++.h>
 using namespace std;
  
