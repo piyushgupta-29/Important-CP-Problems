@@ -1,0 +1,70 @@
+//problem started at:  paused at:  resumed at:
+#include<bits/stdc++.h>
+using namespace std;
+ 
+#define boost ios_base::sync_with_stdio(false);cin.tie(NULL)
+#define endl "\n"
+#define ll long long int
+#define mod 1000000007
+#define vll vector<ll>
+#define vvll vector<vll>
+#define pb push_back
+#define mll map<ll,ll>
+#define pll pair<ll,ll>
+#define N 1000005
+
+vvll a(N);
+
+void dfs(ll c,ll p,vll &dp,vll &vis)
+{
+    // cout<<c<<endl;
+    vis[c]=1;
+    for(auto it:a[c])
+    {
+        if(vis[it]||it==-1) continue; 
+        dp[it]=dp[c]+1;
+        dfs(it,c,dp,vis);
+    }
+}
+int main()
+{
+    boost;
+    ll t,n,i,x,y,j,k,m,p,q,mn,mx,cnt,sum,ans,p1,p2;
+    cin>>t;
+    while(t--)
+    {
+        sum=0;cnt=0;ans=0;mn=1e18;mx=INT_MIN;
+        cin>>n;
+        vll edge(n),dp1(n),dp2(n),vis1(n),vis2(n);
+        for(i=0;i<n;i++) 
+        {
+            cin>>edge[i];
+            dp1[i]=-1;
+            dp2[i]=-1;
+            vis1[i]=0;
+            vis2[i]=0;
+            a[i].clear();
+        }
+        for(i=0;i<n;i++)
+        {
+            if(edge[i]==-1) continue; 
+            a[i].pb(edge[i]);
+        }
+        cin>>p1>>p2;
+        dp1[p1]=0;dp2[p2]=0;
+        
+        dfs(p1,-1,dp1,vis1);
+        dfs(p2,-1,dp2,vis2);
+        for(i=0;i<n;i++)
+        {
+            if(dp1[i]==-1||dp2[i]==-1) continue;
+            if(dp1[i]+dp2[i]<mn)
+            {
+                mn=dp1[i]+dp2[i];
+                ans=i;
+            }
+        }
+        if(mn==1e18) cout<<-1<<endl;
+        else cout<<ans<<endl;
+    }
+}
