@@ -1,4 +1,7 @@
-//problem started at:  paused at:  resumed at:
+// Question:
+// Given a maze with N cells. Each cell may have multiple entry points but not more than one exit(i.e entry/exit points are unidirectional doors like valves).
+// You are given an array Edge[] of N integers, where Edge[i] contains the cell number that can be reached from of cell i in one step. Edge[i] is -1 if the ith cell doesn't have an exit. 
+
 #include<bits/stdc++.h>
 using namespace std;
  
