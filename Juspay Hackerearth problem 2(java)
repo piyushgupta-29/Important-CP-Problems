@@ -1,30 +1,29 @@
 // Question:
-// JS newbie "A" wants to check if he can reach out 
-// to a React expert "B" using his network of React Developers.
-// If he can then return 1 else return 0.
+// JS newbie "A" wants to learn React from "B" and wants 
+// to kow in his network who can introduce him to B in 
+// the shortest time period.
 
-// Input:
+//Input:
 // 4
 // 2
 // 5
 // 7
 // 9
 // 4
-// 2 9 
-// 7 2 
-// 7 9 
-// 9 5 
+// 2 9 2
+// 7 2 3
+// 7 9 7
+// 9 5 1
 // 7
 // 9
 
-// Output:
-// 1
+//Output:
+//5
 
 import java.io.*;
 import java.util.*;
 
-
-class TestClass {
+public class TestClass {
     public static void main(String args[]) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
@@ -39,14 +38,13 @@ class TestClass {
         int[][] fF = new int[e][];
         for(int i=0; i < e; i++)
         {
-            fF[i] = Arrays.stream(br.readLine().split("\\s+")).mapToInt
-            (Integer::parseInt).toArray();
+            fF[i] = Arrays.stream(br.readLine().split("\\s+")).mapToInt(Integer::parseInt).toArray();
         }
         
         int A = Integer.parseInt(br.readLine());
         int B = Integer.parseInt(br.readLine());
         
-        HashMap<Integer, Integer> heap = new HashMap<Integer, Integer>()
+        HashMap<Integer, Integer> hmap = new HashMap<Integer, Integer>()
         {{
             for (int i = 0; i < n; i++)
             {
@@ -54,16 +52,17 @@ class TestClass {
             }
         }};
         
-        int src = heap.get(A);
-        int dest = heap.get(B);
+        int src = hmap.get(A);
+        int dest = hmap.get(B);
         Graph g = new Graph(n);
         for(int[] edge :fF) 
         {
-            int u = heap.get(edge[0]);
-            int v = heap.get(edge[1]);
-            g.addEdge(u,v);
+            int u = hmap.get(edge[0]);
+            int v = hmap.get(edge[1]);
+            int w = edge[2];
+            g.addEdge(u,v,w);
         }
-        bw.write((g.DFS(src,dest) ? 1 : 0) + "\n");
+        bw.write(g.Dij(src,dest) + "\n");
         bw.flush();
     }
 }
@@ -71,51 +70,58 @@ class TestClass {
 class Graph
 {
     private int V;
-    private List<Integer>[] adj;
-    @SuppressWarnings("unchecked")
+    private ArrayList<ArrayList<LinkedList<Integer>>> adj;
     Graph(int V)
     {
         this.V = V;
-        this.adj = new List[V];
+        this.adj = new ArrayList<>();
         for (int i = 0; i < V ; i++)
         {
-            this.adj[i] = new LinkedList<>();
+            this.adj.add(new ArrayList<LinkedList<Integer>>()); 
         }
     }
     
-    public void addEdge(int src, int dest) 
+    public void addEdge(int src, int dest,int wt) 
     {
-        this.adj[src].add(dest);
+        this.adj.get(src).add(new LinkedList<Integer>()
+        {{
+            add(dest);
+            add(wt);
+        }});
     }
         
-   public boolean DFS(int src,int dest)
-   {
-       if(src == dest) return true;
-       boolean[] vis = new boolean[V];
-       vis[src] = true;
-       
-       for(int neigh: this.adj[src])
-       {
-           if(!vis[neigh] && dfsUtil(neigh,dest,vis)) 
-           {
-               return true;
-           }
-       }
-       return false;
-   }
-   
-   private boolean dfsUtil(int src,int dest, boolean[] vis)
-   {
-       if(src == dest) return true;
-       vis[src] = true;
-       
-       for(int neigh: this.adj[src])
-       {
-           if(!vis[neigh] && dfsUtil(neigh,dest,vis))
-           {
-               return true;
-           }
-       }
-       return false;
-   }
+    public int Dij(int src, int dest)
+    {
+        boolean[] vis = new boolean[V];
+        int[] dist = new int[V];
+        Arrays.fill(dist,Integer.MAX_VALUE);
+        Arrays.fill(vis,false);
+        
+        dist[src] = 0;
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b) -> a[1] - b[1]);
+        pq.offer(new int[]{src,0});
+        
+        while(!pq.isEmpty()) {
+            int u = pq.peek()[0],
+            wt = pq.peek()[1];
+            pq.poll();
+            
+            if(vis[u]) continue;
+            vis[u] = true;
+            ArrayList<LinkedList<Integer>> neigh = this.adj.get(u);
+            for(LinkedList<Integer> node: neigh){
+                int v = node.get(0);
+                int vWt = node.get(1);
+                if(dist[u] + vWt < dist[v])
+                {
+                    dist[v] = dist[u] + vWt;
+                    pq.offer(new int[]{v, dist[v]});
+                }
+            }
+        }
+        if(dist[dest] == Integer.MAX_VALUE)
+            return -1;
+        else 
+            return dist[dest];
+    }
 }
