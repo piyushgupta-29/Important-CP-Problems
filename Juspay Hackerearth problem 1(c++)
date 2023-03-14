@@ -1,9 +1,8 @@
-/*
-Question:
-A Nagging React newbie "B" is constantly troubling React expert "A". 
-React Expert "A" needs to know the minimum set of people following him he needs to remove from his network to stop "B" from reaching out to him
+// Question:
+// A Nagging React newbie "B" is constantly troubling React expert "A". 
+// React Expert "A" needs to know the minimum set of people following him he needs to remove from his network to stop "B" from reaching out to him.
+
 #include<bits/stdc++.h>
-*/
 
 using namespace std;
 
