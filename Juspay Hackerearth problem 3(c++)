@@ -1,3 +1,25 @@
+// Question:
+// JS newbie "A" wants to learn React from "B" and wants 
+// to kow in his network who can introduce him to B in 
+// the shortest time period.
+
+//Input:
+// 4
+// 2
+// 5
+// 7
+// 9
+// 4
+// 2 9 2
+// 7 2 3
+// 7 9 7
+// 9 5 1
+// 7
+// 9
+
+//Output:
+//5
+
 #include<bits/stdc++.h>
 using namespace std;
 
