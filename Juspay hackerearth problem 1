@@ -1,0 +1,49 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+#define ll long long int
+#define vll vector<ll>
+#define mll map<ll,ll>
+#define pb push_back
+#define vvll vector<vll>
+int main()
+{
+    ll n,m,src,dest,i,x,ans=0;
+    cin>>n;
+    vll arr(n);
+    for(i=0;i<n;i++) cin>>arr[i];
+    vvll a(n+1);
+    mll mp;
+    cin>>m;
+    for(i=0;i<n;i++)
+    mp[arr[i]]=i;
+    for(i=0;i<m;i++)
+    { 
+       ll u,v;
+       cin>>u>>v;
+       a[mp[u]].pb(mp[v]);
+    }
+    cin>>src>>dest;
+    queue<ll> q;
+    q.push(mp[src]);
+    vll vis(n+1);
+    vis[mp[src]]++;
+    while(!q.empty())
+    {
+       x=q.front();
+       q.pop();
+       for(auto it:a[x])
+       { 
+           if(it==mp[dest])
+           { 
+              ans++;
+           } 
+           else if(!vis[it])
+           { 
+              vis[it]++;
+              q.push(it);
+           }
+       }
+    }
+    cout<<ans<<endl;
+}
