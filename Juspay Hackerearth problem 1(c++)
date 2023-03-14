@@ -28,7 +28,7 @@ int main()
        cin>>u>>v;
        a[mp[u]].pb(mp[v]);
     }
-    cin>>src>>dest;
+    cin>>dest>>src;
     queue<ll> q;
     q.push(mp[src]);
     vll vis(n+1);
