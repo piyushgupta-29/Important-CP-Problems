@@ -35,7 +35,7 @@ class TestClass {
             members[i] = Integer.parseInt(br.readLine());
             
         int e = Integer.parseInt(br.readLine());
-        int[][] fF = new int[e][2];
+        int[][] fF = new int[e][];
         for(int i=0; i < e; i++)
         {
             fF[i] = Arrays.stream(br.readLine().split("\\s+")).mapToInt
@@ -100,6 +100,7 @@ class Graph
         
         dist[src] = 0;
         PriorityQueue<int[]> pq = new PriorityQueue<>((a,b) -> a[1] - b[1]);
+        pq.offer(new int[]{src,0});
         
         while(!pq.isEmpty()) {
             int u = pq.peek()[0],
@@ -112,7 +113,7 @@ class Graph
             for(LinkedList<Integer> node: neigh){
                 int v = node.get(0);
                 int vWt = node.get(1);
-                if(dist[u] + vWt < dist[V])
+                if(dist[u] + vWt < dist[v])
                 {
                     dist[v] = dist[u] + vWt;
                     pq.offer(new int[]{v, dist[v]});
