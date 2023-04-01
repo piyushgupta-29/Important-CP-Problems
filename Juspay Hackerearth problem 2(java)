@@ -23,7 +23,9 @@
 import java.io.*;
 import java.util.*;
 
-public class TestClass {
+import sun.net.www.content.text.plain;
+
+class TestClass {
     public static void main(String args[]) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
@@ -38,7 +40,8 @@ public class TestClass {
         int[][] fF = new int[e][];
         for(int i=0; i < e; i++)
         {
-            fF[i] = Arrays.stream(br.readLine().split("\\s+")).mapToInt(Integer::parseInt).toArray();
+            fF[i] = Arrays.stream(br.readLine().split("\\s+")).mapToInt
+            (Integer::parseInt).toArray();
         }
         
         int A = Integer.parseInt(br.readLine());
@@ -59,10 +62,9 @@ public class TestClass {
         {
             int u = hmap.get(edge[0]);
             int v = hmap.get(edge[1]);
-            int w = edge[2];
-            g.addEdge(u,v,w);
+            g.addEdge(u,v);
         }
-        bw.write(g.Dij(src,dest) + "\n");
+        bw.write((g.DFS(src,dest) ? 1:0) + "\n");
         bw.flush();
     }
 }
@@ -70,58 +72,45 @@ public class TestClass {
 class Graph
 {
     private int V;
-    private ArrayList<ArrayList<LinkedList<Integer>>> adj;
+    private List<Integer>[] adj;
+    @SuppressWarnings("unchecked")
     Graph(int V)
     {
         this.V = V;
-        this.adj = new ArrayList<>();
+        this.adj = new List[V];
         for (int i = 0; i < V ; i++)
         {
-            this.adj.add(new ArrayList<LinkedList<Integer>>()); 
+            this.adj[i] = new LinkedList<>();
         }
     }
     
-    public void addEdge(int src, int dest,int wt) 
+    public void addEdge(int src, int dest) 
     {
-        this.adj.get(src).add(new LinkedList<Integer>()
-        {{
-            add(dest);
-            add(wt);
-        }});
+        this.adj[src].add(dest);
     }
         
-    public int Dij(int src, int dest)
-    {
+    public boolean DFS(int src, int dest) {
+        if(src==dest) return true;
         boolean[] vis = new boolean[V];
-        int[] dist = new int[V];
-        Arrays.fill(dist,Integer.MAX_VALUE);
-        Arrays.fill(vis,false);
-        
-        dist[src] = 0;
-        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b) -> a[1] - b[1]);
-        pq.offer(new int[]{src,0});
-        
-        while(!pq.isEmpty()) {
-            int u = pq.peek()[0],
-            wt = pq.peek()[1];
-            pq.poll();
-            
-            if(vis[u]) continue;
-            vis[u] = true;
-            ArrayList<LinkedList<Integer>> neigh = this.adj.get(u);
-            for(LinkedList<Integer> node: neigh){
-                int v = node.get(0);
-                int vWt = node.get(1);
-                if(dist[u] + vWt < dist[v])
-                {
-                    dist[v] = dist[u] + vWt;
-                    pq.offer(new int[]{v, dist[v]});
-                }
+        vis[src] = true;
+
+        for (int neigh:this.adj[src]) {
+            if(!vis[neigh]&&dfsUtil(neigh,dest,vis)) {
+                return true;
             }
         }
-        if(dist[dest] == Integer.MAX_VALUE)
-            return -1;
-        else 
-            return dist[dest];
+        return false;
+    }
+
+    private boolean dfsUtil(int src,int dest,boolean[] vis){
+        if(src==dest) return true;
+        vis[src]=true;
+
+        for(int neigh:this.adj[src]){
+            if(!vis[neigh]&&dfsUtil(neigh,dest,vis)){
+                return true;
+            }
+        }
+        return false;
     }
 }
