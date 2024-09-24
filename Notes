@@ -38,6 +38,8 @@ eg.(Permutation Restoration-1900 Codeforces)
 
 9)Gcd(x,y)=Gcd(x-y,y).
 
+10) All numbers at most 10^5 have at most 128 divisors
+
 Trees and Graphs:
 1)If dfs or bfs is not possible for graph, go for dsu by joining components using 
 edgelist(if edges are weighted)
