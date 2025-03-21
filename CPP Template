@@ -211,14 +211,23 @@ string dectobin(ll n)
 }
 
 //Trie
+//for words "abc", "abd", "be"
+//Trie will store it like below
+//        null root
+//         |     |
+//         a     b
+//         |     |
+//         b     e
+//        / \
+//       c   d
 //Similar to AVL tree (but have better complexity)
 //Used mainly for question related to list of words
-
+//eow represents end of word, e.g for letter c in "abc" eow will be true
 class Trie
 {
     public:
     vector<Trie*> child;
-    bool eow;
+    bool eow; 
  
     Trie()
     {
@@ -237,6 +246,25 @@ void insert(string s,Trie* root)
         if(i==s.size()-1) root->child[idx]->eow=true;
         root=root->child[idx];
     }
+}
+// This function gives the longest prefix in array of words
+e.g for ["a","app","bba","apple","ap","appl"] the below function will return "apple" 
+as all prefixes of apple are present in the array.
+string longestPrefix(Trie* root) 
+{
+    string ans="";
+    for(int i=0;i<root->child.size();i++)
+    {
+        string temp="";
+        cout<<i<<' '<<ans<<endl;
+        if(root->child[i]!=nullptr&&root->child[i]->eow==true)
+        {
+            temp.push_back(char(i+'a'));
+            temp=temp + longestPrefix(root->child[i]);
+        }
+        if(temp.size()>ans.size()) ans=temp;
+    }
+    return ans;
 }
 
 //Segment Tree
