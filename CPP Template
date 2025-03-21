@@ -209,6 +209,36 @@ string dectobin(ll n)
     reverse(s.begin(),s.end());
     return s;
 }
+
+//Trie
+//Similar to AVL tree (but have better complexity)
+//Used mainly for question related to list of words
+
+class Trie
+{
+    public:
+    vector<Trie*> child;
+    bool eow;
+ 
+    Trie()
+    {
+        child=vector<Trie*>(26,nullptr);
+        eow=false;
+    }
+    
+};
+ 
+void insert(string s,Trie* root) 
+{
+    for(int i=0;i<s.size();i++)
+    {
+        int idx=s[i]-'a';
+        if(root->child[idx]==nullptr) root->child[idx]=new Trie();
+        if(i==s.size()-1) root->child[idx]->eow=true;
+        root=root->child[idx];
+    }
+}
+
 //Segment Tree
 //Segment Tree has a size of 4 times that of normal array i.e(4*n)
 //Segment Tree is a full binary tree
