@@ -247,6 +247,21 @@ void insert(string s,Trie* root)
         root=root->child[idx];
     }
 }
+
+void print(Trie* root,string s) 
+{
+    if(root->eow) cout<<s<<endl;
+    for(int i=0;i<26;i++)
+    {
+        if(root->child[i]!=nullptr)
+        {
+            s.push_back(char(i+'a'));
+            print(root->child[i],s);
+            s.pop_back();
+        }
+    }
+}
+
 // This function gives the longest prefix in array of words
 // e.g for ["a","app","bba","apple","ap","appl"] the below function will return "apple" 
 // as all prefixes of apple are present in the array.
