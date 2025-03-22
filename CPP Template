@@ -248,8 +248,8 @@ void insert(string s,Trie* root)
     }
 }
 // This function gives the longest prefix in array of words
-e.g for ["a","app","bba","apple","ap","appl"] the below function will return "apple" 
-as all prefixes of apple are present in the array.
+// e.g for ["a","app","bba","apple","ap","appl"] the below function will return "apple" 
+// as all prefixes of apple are present in the array.
 string longestPrefix(Trie* root) 
 {
     string ans="";
